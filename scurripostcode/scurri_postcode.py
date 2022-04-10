@@ -11,6 +11,7 @@ COMPILED_REGEX = re.compile(POSTCODE_REGEX)
 
 NON_GEOGRAPHIC_AREA_CODES = ("EC", "BS", "BT", "IM", "NE", "SA", "WV")
 
+
 class InvalidPostcode(Exception):
     """Raised when an invalid code is
     passed to the format function"""
@@ -45,20 +46,25 @@ def format_postcode(postcode: str) -> str:
 
     postcode = postcode.upper().replace(' ', '').replace('-', '')
 
-    if len(postcode) == 3:  # Deals with non-geographic Special Cases
+    if len(postcode) == 3:
+        # Handles non-geographic Special Cases
         return postcode
     elif len(postcode) == 4:
-        if postcode[2:] in NON_GEOGRAPHIC_AREA_CODES: # Deals with codes with no space
+        if postcode[:2] in NON_GEOGRAPHIC_AREA_CODES:
+            # Handles postcodes with no space
             return postcode
-        else: # Deals with Bermuda postcodes
+        else:
+            # Handles Bermuda postcodes
             inward_code = postcode[-2:]
             outward_code = postcode[:-2]
             return outward_code + " " + inward_code
-    elif postcode[-4:].isdigit():  # Deals with various British Overseas Territories
+    elif postcode[-4:].isdigit():
+        # Handles various British Overseas Territories
         inward_code = postcode[-4:]
         outward_code = postcode[:-4]
         return outward_code + "-" + inward_code
-    else:  # Deals with post code formats where inward code is 3 characters long
+    else:
+        # Handles post code formats where inward code is 3 characters long
         inward_code = postcode[-3:]
         outward_code = postcode[:-3]
         return outward_code + " " + inward_code
