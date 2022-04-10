@@ -91,7 +91,17 @@ class TestPostcodeFormatting(unittest.TestCase):
         for i in range(0, len(POORLY_FORMATTED_POSTCODES)):
             self.assertEqual(scurri_postcode.format_postcode(POORLY_FORMATTED_POSTCODES[i]), GOOD_STANDARD_POSTCODES[i])
 
+    def test_invalid_outward_codes_formatting(self):
+        for postcode in INVALID_OUTWARD_POSTCODES:
+            self.assertRaises(scurri_postcode.InvalidPostcode, scurri_postcode.format_postcode, postcode)
 
+    def test_invalid_inward_codes_formatting(self):
+        for postcode in INVALID_INWARD_POSTCODES:
+            self.assertRaises(scurri_postcode.InvalidPostcode, scurri_postcode.format_postcode, postcode)
+
+    def test_invalid_characters_codes_formatting(self):
+        for postcode in INVALID_CHARACTER_POSTCODES:
+            self.assertRaises(scurri_postcode.InvalidPostcode, scurri_postcode.format_postcode, postcode)
 
 
 if __name__ == '__main__':
