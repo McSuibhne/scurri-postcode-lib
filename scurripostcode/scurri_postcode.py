@@ -7,7 +7,7 @@ POSTCODE_REGEX = '^(([A-Z]{1,2}[0-9][A-Z0-9]' \
                  '?[0-9][A-Z]{2}|BFPO ?[0-9]{1,4}|(KY[0-9]|MSR|VG|AI)[ -]' \
                  '?[0-9]{4}|[A-Z]{2} ?[0-9]{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)$'
 
-COMPILED_REGEX = re.compile(POSTCODE_REGEX)
+COMP_REGEX = re.compile(POSTCODE_REGEX)
 
 NON_GEOGRAPHIC_AREA_CODES = ("EC", "BS", "BT", "IM", "NE", "SA", "WV")
 
@@ -26,10 +26,10 @@ def validate_postcode(postcode: str) -> bool:
     Input: an unverified postcode as a string.
     Output: a boolean value.
     """
-    if not COMPILED_REGEX.match(postcode.upper().replace(" ", "").replace("-", "")):
-        return False
-    else:
+    if COMP_REGEX.match(postcode.upper().replace(" ", "").replace("-", "")):
         return True
+    else:
+        return False
 
 
 def format_postcode(postcode: str) -> str:
