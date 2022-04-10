@@ -22,7 +22,8 @@ POORLY_FORMATTED_POSTCODES = ["EC1A   1B B",
                               "M  1 1A E ",
                               "B338TH",
                               "C  R 2 6 X H",
-                              "DN551     PT"]
+                              "DN551     PT",
+                              "BS16 9H-W"]
 
 INVALID_OUTWARD_POSTCODES = ["ECRA 1BB",
                              "WA 0AX",
@@ -76,6 +77,21 @@ class TestPostcodeValidation(unittest.TestCase):
     def test_invalid_characters_codes(self):
         for postcode in INVALID_CHARACTER_POSTCODES:
             self.assertFalse(scurri_postcode.validate_postcode(postcode), postcode)
+
+class TestPostcodeFormatting(unittest.TestCase):
+    def test_uppercase_valid_codes_formatting(self):
+        for postcode in GOOD_STANDARD_POSTCODES:
+            self.assertEqual(scurri_postcode.format_postcode(postcode), postcode)
+
+    def test_lowercase_valid_codes_formatting(self):
+        for postcode in GOOD_STANDARD_POSTCODES:
+            self.assertEqual(scurri_postcode.format_postcode(postcode.lower()), postcode)
+
+    def test_poorly_formatted_valid_codes_formatting(self):
+        for i in range(0, len(POORLY_FORMATTED_POSTCODES)):
+            self.assertEqual(scurri_postcode.format_postcode(POORLY_FORMATTED_POSTCODES[i]), GOOD_STANDARD_POSTCODES[i])
+
+
 
 
 if __name__ == '__main__':
